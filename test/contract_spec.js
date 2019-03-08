@@ -1,20 +1,25 @@
 // /*global contract, config, it, assert*/
-/*
-const SimpleStorage = require('Embark/contracts/SimpleStorage');
+
+const Mint = require('Embark/contracts/Mint');
 
 let accounts;
 
 // For documentation please see https://embark.status.im/docs/contracts_testing.html
 config({
-  //deployment: {
-  //  accounts: [
-  //    // you can configure custom accounts with a custom balance
-  //    // see https://embark.status.im/docs/contracts_testing.html#Configuring-accounts
-        Mnemonic: example exile argue silk regular smile grass bomb merge arm assist farm
-  //  ]
-  //},
+  deployment: {
+    host: "localhost", // Host of the blockchain node
+    port: 8545, // Port of the blockchain node
+    type: "rpc", // Type of connection (ws or rpc),
+    accounts: [ {
+
+    "mnemonic":"example exile argue silk regular smile grass bomb merge arm assist farm",
+    "numAddresses" : 10 
+
+    }
+   ]
+  },
   contracts: {
-    "SimpleStorage": {
+    "Mint": {
       args: [100]
     }
   }
@@ -22,17 +27,17 @@ config({
   accounts = web3_accounts
 });
 
-contract("SimpleStorage", function () {
+contract("Mint", function () {
   this.timeout(0);
 
   it("should set constructor value", async function () {
-    let result = await SimpleStorage.methods.storedData().call();
+    let result = await Mint.methods.storedData().call();
     assert.strictEqual(parseInt(result, 10), 100);
   });
 
   it("set storage value", async function () {
-    await SimpleStorage.methods.set(150).send();
-    let result = await SimpleStorage.methods.get().call();
+    await Mint.methods.set(150).send();
+    let result = await Mint.methods.get().call();
     assert.strictEqual(parseInt(result, 10), 150);
   });
 
@@ -40,5 +45,4 @@ contract("SimpleStorage", function () {
     let balance = await web3.eth.getBalance(accounts[0]);
     assert.ok(parseInt(balance, 10) > 0);
   });
-}
-*/
+});
